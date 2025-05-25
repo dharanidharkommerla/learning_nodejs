@@ -1,0 +1,18 @@
+<html>
+    <head></head>
+    <body>
+        <% for(i=0;i<menu.length;i++){ %>
+            <a href="<%= menu[i].link %>"> <%=menu[i].name%> </a>
+        <% } %>
+        <h1><%=title%></h1>
+        <div>
+            <% for(i=0;i<product.length;i++) {%>
+            <div>
+                <img src="<%=product[i].Image%>" width="100", height="100"/>
+                <p><%=product[i].product_name %> || <%=product[i].Brand ? product[i].Brand : product[i].company %> || <%=product[i].category %> </p>
+            </div>
+        <%}%>
+        </div>
+
+    </body>
+</html>

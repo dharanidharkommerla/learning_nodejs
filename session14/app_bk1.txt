@@ -1,0 +1,39 @@
+let fs = require('fs');
+let express = require('express');
+let dotenv = require('dotenv');
+dotenv.config();
+let morgan = require('morgan');
+let ejs = require('ejs');
+let port = process.env.PORT || 5000;
+let app = express();
+let categoryRouter = require('./src/controller/categoryRouter');
+let productRouter = require('./src/controller/productRouter');
+
+let menu=[
+    {name:'Category', link:'/category'},
+    {name:'Product', link:'/product'},
+];
+
+app.use(morgan('dev'));
+app.use(morgan('common',{stream:fs.createWriteStream('./app.log')}));
+app.use(express.static(__dirname+"/public"));
+
+app.set('views','./src/views');
+app.set('view engine','ejs');
+
+app.get('/',(req,res)=>{
+    // res.render('index.ejs',{title:'Home Page', menu:menu});
+    res.render('index.ejs',{title:'Home Page', menu});
+
+});
+
+app.use('/product', productRouter);
+app.use('/category', categoryRouter)
+app.listen(port,(err)=>{
+    if(err) throw err;
+    else{
+        console.log(`server is started on ${port}`);
+    }
+});
+
+
